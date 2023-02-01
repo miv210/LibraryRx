@@ -34,37 +34,34 @@ public partial class LibraryDbContext : DbContext
             entity.ToTable("Book");
 
             entity.Property(e => e.Id)
-                .ValueGeneratedNever()
+                .UseIdentityAlwaysColumn()
                 .HasColumnName("id");
-            entity.Property(e => e.ArticleNumber).HasColumnName("Article_number");
             entity.Property(e => e.Author).HasColumnType("character varying");
             entity.Property(e => e.Name).HasColumnType("character varying");
-            entity.Property(e => e.NumberOfInstances).HasColumnName("Number_of_instances");
-            entity.Property(e => e.YearOfPublication).HasColumnName("Year_of_publication");
         });
 
         modelBuilder.Entity<IssuanceOfBook>(entity =>
         {
-            entity.HasKey(e => e.IdReader).HasName("Issuance_of_books_pkey");
+            entity.HasKey(e => e.IdBook).HasName("IssuanceOfBook_pkey");
 
-            entity.ToTable("Issuance_of_books");
+            entity.ToTable("IssuanceOfBook");
 
-            entity.Property(e => e.IdReader)
+            entity.Property(e => e.IdBook)
                 .ValueGeneratedNever()
-                .HasColumnName("id_reader");
-            entity.Property(e => e.DateOfIssue).HasColumnName("Date_of_issue");
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.IdBook).HasColumnName("id_book");
-            entity.Property(e => e.ReturnDate).HasColumnName("Return_date");
+                .HasColumnName("id_book");
+            entity.Property(e => e.Id)
+                .ValueGeneratedOnAdd()
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("id");
+            entity.Property(e => e.IdReader).HasColumnName("id_reader");
 
-            entity.HasOne(d => d.IdBookNavigation).WithMany(p => p.IssuanceOfBooks)
-                .HasForeignKey(d => d.IdBook)
+            entity.HasOne(d => d.IdBookNavigation).WithOne(p => p.IssuanceOfBook)
+                .HasForeignKey<IssuanceOfBook>(d => d.IdBook)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("Issuance_book");
+                .HasConstraintName("Issuance_books");
 
-            entity.HasOne(d => d.IdReaderNavigation).WithOne(p => p.IssuanceOfBook)
-                .HasForeignKey<IssuanceOfBook>(d => d.IdReader)
-                .OnDelete(DeleteBehavior.ClientSetNull)
+            entity.HasOne(d => d.IdReaderNavigation).WithMany(p => p.IssuanceOfBooks)
+                .HasForeignKey(d => d.IdReader)
                 .HasConstraintName("Issuance_reader");
         });
 

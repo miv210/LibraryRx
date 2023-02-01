@@ -7,9 +7,9 @@ public partial class IssuanceOfBook
 {
     public int Id { get; set; }
 
-    public int IdReader { get; set; }
-
     public int IdBook { get; set; }
+
+    public int? IdReader { get; set; }
 
     public DateOnly? DateOfIssue { get; set; }
 
@@ -17,5 +17,5 @@ public partial class IssuanceOfBook
 
     public virtual Book IdBookNavigation { get; set; } = null!;
 
-    public virtual Reader IdReaderNavigation { get; set; } = null!;
+    public virtual Reader? IdReaderNavigation { get; set; }
 }

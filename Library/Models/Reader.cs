@@ -7,7 +7,7 @@ public partial class Reader
 {
     public int Id { get; set; }
 
-    public string Fullname { get; set; } = null!;
+    public string? Fullname { get; set; }
 
-    public virtual IssuanceOfBook? IssuanceOfBook { get; set; }
+    public virtual ICollection<IssuanceOfBook> IssuanceOfBooks { get; } = new List<IssuanceOfBook>();
 }

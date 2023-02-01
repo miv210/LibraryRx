@@ -17,5 +17,5 @@ public partial class Book
 
     public int? NumberOfInstances { get; set; }
 
-    public virtual ICollection<IssuanceOfBook> IssuanceOfBooks { get; } = new List<IssuanceOfBook>();
+    public virtual IssuanceOfBook? IssuanceOfBook { get; set; }
 }
