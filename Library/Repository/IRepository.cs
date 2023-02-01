@@ -2,7 +2,7 @@
 
 namespace Library.Repository
 {
-    public interface IRepository<T> where T : class
+    public interface IRepository<T> : IDisposable where T : class
     {
         public T Get(int id);
         IEnumerable<T> GetAll();
